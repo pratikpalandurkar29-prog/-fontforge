@@ -1,0 +1,128 @@
+---
+interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+  company: string;
+  avatar: string;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    quote: "FontForge has completely transformed our design handoff process. What used to take hours of manual font identification now takes seconds. The accuracy is incredible.",
+    author: "Sarah Chen",
+    role: "Design Systems Lead",
+    company: "Linear",
+    avatar: "SC"
+  },
+  {
+    quote: "The best font extraction tool I've used. It catches variable fonts, provides exact CSS snippets, and respects licensing. Essential for any frontend developer.",
+    author: "Marcus Johnson",
+    role: "Senior Frontend Engineer",
+    company: "Vercel",
+    avatar: "MJ"
+  },
+  {
+    quote: "As a typography nerd, I appreciate the level of detail — foundry info, glyph counts, OpenType features. It's like having a font expert on demand.",
+    author: "Elena Rodriguez",
+    role: "Creative Director",
+    company: "Pentagram",
+    avatar: "ER"
+  },
+  {
+    quote: "We integrated FontForge's API into our design system tooling. The batch processing handles hundreds of URLs flawlessly. Rock-solid reliability.",
+    author: "David Park",
+    role: "Engineering Manager",
+    company: "Notion",
+    avatar: "DP"
+  },
+  {
+    quote: "Finally, a font tool that understands modern web fonts. Variable font support, proper WOFF2 handling, and the browser extension makes it seamless.",
+    author: "Aisha Patel",
+    role: "Type Designer",
+    company: "Google Fonts",
+    avatar: "AP"
+  },
+  {
+    quote: "The privacy-first approach is a game-changer for enterprise. No font data leaves our network, and the on-premise option gives us full control.",
+    author: "James Wilson",
+    role: "Security Architect",
+    company: "Stripe",
+    avatar: "JW"
+  }
+];
+---
+
+<section class="py-24 md:py-32 bg-gray-50 dark:bg-gray-900">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+        Trusted by <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Designers & Developers</span>
+      </h2>
+      <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300">
+        Join thousands of professionals who use FontForge to streamline their typography workflow.
+      </p>
+    </div>
+
+    <!-- Testimonials Carousel/Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {testimonials.map((testimonial, index) => (
+        <article class="group relative p-8 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-800 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-500 animate-fade-in-up" style={`animation-delay: ${index * 100}ms`}>
+          <!-- Quote Icon -->
+          <div class="absolute top-6 right-6 text-indigo-100 dark:text-indigo-900/30">
+            <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+          </div>
+
+          <!-- Quote -->
+          <blockquote class="mb-8">
+            <p class="text-gray-700 dark:text-gray-200 leading-relaxed text-base">
+              "{testimonial.quote}"
+            </p>
+          </blockquote>
+
+          <!-- Author Info -->
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+              {testimonial.avatar}
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900 dark:text-white">{testimonial.author}</p>
+              <p class="text-sm text-gray-500 dark:text-gray-400">{testimonial.role} at {testimonial.company}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Company Logos -->
+    <div class="mt-20">
+      <p class="text-center text-gray-500 dark:text-gray-400 text-sm font-medium mb-8 tracking-wider uppercase">Used by teams at</p>
+      <div class="flex flex-wrap items-center justify-center gap-12 md:gap-16 opacity-60 hover:opacity-100 transition-opacity">
+        {['Linear', 'Vercel', 'Notion', 'Stripe', 'GitHub', 'Figma'].map(name => (
+          <span class="text-xl font-semibold text-gray-400 dark:text-gray-500">{name}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+    opacity: 0;
+  }
+</style>

@@ -1,0 +1,203 @@
+---
+interface Plan {
+  name: string;
+  price: { monthly: string; yearly: string };
+  description: string;
+  features: string[];
+  cta: string;
+  popular?: boolean;
+  ctaVariant?: 'primary' | 'secondary';
+}
+
+const plans: Plan[] = [
+  {
+    name: "Free",
+    price: { monthly: "$0", yearly: "$0" },
+    description: "Perfect for occasional font discovery",
+    features: [
+      "Unlimited website analyses",
+      "Download fonts in WOFF2, WOFF, TTF",
+      "Font details & license info",
+      "Copy CSS @font-face snippets",
+      "Browser extension access",
+      "Community support"
+    ],
+    cta: "Start Free",
+    ctaVariant: "secondary"
+  },
+  {
+    name: "Pro",
+    price: { monthly: "$12", yearly: "$10" },
+    description: "For designers & developers who need more",
+    features: [
+      "Everything in Free",
+      "Batch URL processing (up to 50)",
+      "Variable font axis inspection",
+      "OpenType feature detection",
+      "Font subsetting & optimization",
+      "API access (10,000 requests/mo)",
+      "Priority email support",
+      "Custom font collections"
+    ],
+    cta: "Get Pro",
+    popular: true,
+    ctaVariant: "primary"
+  },
+  {
+    name: "Team",
+    price: { monthly: "$36", yearly: "$30" },
+    description: "Collaboration for design & dev teams",
+    features: [
+      "Everything in Pro",
+      "Unlimited team members",
+      "Shared font libraries",
+      "Style guide generation",
+      "SSO & SCIM provisioning",
+      "API access (100,000 requests/mo)",
+      "Dedicated support channel",
+      "Audit logs & compliance",
+      "On-premise deployment option"
+    ],
+    cta: "Contact Sales",
+    ctaVariant: "secondary"
+  }
+];
+---
+
+<section id="pricing" class="py-24 md:py-32 bg-white dark:bg-gray-900">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+        Simple, <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Transparent Pricing</span>
+      </h2>
+      <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
+        Start free, upgrade when you need more. No hidden fees, cancel anytime.
+      </p>
+
+      <!-- Billing Toggle -->
+      <div class="inline-flex items-center gap-4 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl">
+        <span class="text-sm font-medium text-gray-600 dark:text-gray-300">Monthly</span>
+        <button
+          id="billing-toggle"
+          class="relative w-11 h-6 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center transition-colors"
+          role="switch"
+          aria-checked="false"
+        >
+          <span class="absolute left-1 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow transition-transform"></span>
+        </button>
+        <span class="text-sm font-medium text-gray-600 dark:text-gray-300">Yearly</span>
+        <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/30 px-2 py-1 rounded-full">Save 20%</span>
+      </div>
+    </div>
+
+    <!-- Plans Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {plans.map((plan, index) => (
+        <article class="relative {plan.popular ? 'ring-2 ring-indigo-500' : ''} rounded-2xl bg-white dark:bg-gray-800 border {plan.popular ? 'border-indigo-500' : 'border-gray-100 dark:border-gray-700'} shadow-{plan.popular ? 'xl shadow-indigo-500/10' : 'sm'} p-8 transition-all duration-300 hover:shadow-lg animate-fade-in-up" style={`animation-delay: ${index * 100}ms`}>
+          {plan.popular && (
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-semibold rounded-full">
+              Most Popular
+            </div>
+          )}
+
+          <div class="text-center mb-8">
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{plan.name}</h3>
+            <div class="flex items-baseline justify-center gap-1 mb-2">
+              <span class="text-4xl font-bold text-gray-900 dark:text-white" data-monthly={plan.price.monthly} data-yearly={plan.price.yearly}>{plan.price.monthly}</span>
+              <span class="text-gray-500 dark:text-gray-400">/month</span>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">{plan.description}</p>
+          </div>
+
+          <ul class="space-y-4 mb-8" role="list">
+            {plan.features.map(feature => (
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-gray-700 dark:text-gray-200 text-sm">{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          <button
+            class="w-full py-3 px-6 rounded-xl font-semibold text-base transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 {
+              plan.ctaVariant === 'primary'
+                ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:ring-indigo-500 dark:focus:ring-offset-gray-800'
+                : 'text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 focus:ring-gray-500 dark:focus:ring-offset-gray-800'
+            }"
+          >
+            {plan.cta}
+          </button>
+        </article>
+      ))}
+    </div>
+
+    <!-- FAQ -->
+    <div class="mt-24 max-w-3xl mx-auto">
+      <h3 class="text-2xl font-bold text-center text-gray-900 dark:text-white mb-12">Frequently Asked Questions</h3>
+      <dl class="space-y-6" id="faq">
+        {[
+          { q: "Can I use FontForge for commercial projects?", a: "Yes! FontForge helps you identify fonts and their licenses. Always verify the font's license before commercial use. We provide license information but recommend checking with the foundry directly." },
+          { q: "Does it work with variable fonts?", a: "Absolutely. FontForge fully supports variable fonts, showing all available axes (weight, width, slant, optical size, etc.) and letting you download the complete variable font file." },
+          { q: "Is there a limit on the Free plan?", a: "The Free plan includes unlimited website analyses. The only limits are on batch processing (Pro/Team) and API requests. You can analyze as many individual URLs as you need." },
+          { q: "How accurate is the font detection?", a: "Our AI-powered engine achieves 99%+ accuracy on modern websites. It analyzes CSS @font-face rules, computed styles, Font Loading API, and network requests to catch every font." },
+          { q: "Can I self-host FontForge?", a: "Yes, the Team plan includes an on-premise deployment option with Docker/Kubernetes support. Contact sales for enterprise licensing and deployment assistance." },
+          { q: "What formats can I download?", a: "WOFF2 (recommended), WOFF, TTF, and OTF. We prioritize WOFF2 for web use as it offers the best compression and browser support." }
+        ].map((item, index) => (
+          <div class="group bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <dt class="font-semibold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+              <span class="text-indigo-600 dark:text-indigo-400">Q{index + 1}.</span>
+              {item.q}
+            </dt>
+            <dd class="text-gray-600 dark:text-gray-300 ml-6">{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('billing-toggle') as HTMLButtonElement;
+    const prices = document.querySelectorAll('[data-monthly]');
+    let isYearly = false;
+
+    toggle.addEventListener('click', () => {
+      isYearly = !isYearly;
+      toggle.setAttribute('aria-checked', isYearly.toString());
+
+      // Animate toggle
+      const thumb = toggle.querySelector('span') as HTMLElement;
+      thumb.style.transform = isYearly ? 'translateX(20px) translateY(-50%)' : 'translateY(-50%)';
+      toggle.style.backgroundColor = isYearly ? 'rgb(99 102 241)' : 'rgb(209 213 219)';
+
+      // Update prices
+      prices.forEach(el => {
+        const monthly = el.getAttribute('data-monthly');
+        const yearly = el.getAttribute('data-yearly');
+        el.textContent = isYearly ? yearly : monthly;
+      });
+    });
+  });
+</script>
+
+<style>
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+    opacity: 0;
+  }
+</style>

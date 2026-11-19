@@ -1,0 +1,274 @@
+---
+---
+
+<section id="demo" class="py-24 md:py-32 bg-gray-50 dark:bg-gray-900">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Section Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+        Try It <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Right Now</span>
+      </h2>
+      <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300">
+        Enter any website URL below to see FontForge in action. No installation required.
+      </p>
+    </div>
+
+    <!-- Demo Interface -->
+    <div class="max-w-4xl mx-auto">
+      <!-- URL Input -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-xl p-6 md:p-8 mb-8">
+        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+          <label for="url-input" class="sr-only">Website URL</label>
+          <div class="relative flex-1">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+              </svg>
+            </div>
+            <input
+              type="url"
+              id="url-input"
+              placeholder="https://example.com"
+              class="w-full pl-12 pr-4 py-4 text-lg bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+              value="https://stripe.com"
+            />
+          </div>
+          <button
+            id="analyze-btn"
+            class="px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-lg shadow-indigo-500/25 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 flex items-center gap-2 whitespace-nowrap"
+          >
+            <span>Analyze Fonts</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Quick Examples -->
+        <div class="flex flex-wrap gap-2 text-sm">
+          <span class="text-gray-500 dark:text-gray-400 self-center mr-2">Popular examples:</span>
+          <button class="example-btn px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors" data-url="https://stripe.com">Stripe</button>
+          <button class="example-btn px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors" data-url="https://github.com">GitHub</button>
+          <button class="example-btn px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors" data-url="https://vercel.com">Vercel</button>
+          <button class="example-btn px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors" data-url="https://linear.app">Linear</button>
+          <button class="example-btn px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-indigo-100 dark:hover:bg-indigo-900/30 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors" data-url="https://notion.so">Notion</button>
+        </div>
+      </div>
+
+      <!-- Results Area (Hidden initially) -->
+      <div id="results" class="hidden">
+        <!-- Loading State -->
+        <div id="loading" class="hidden bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-xl p-8">
+          <div class="flex flex-col items-center gap-6">
+            <div class="relative">
+              <div class="w-16 h-16 border-4 border-indigo-200 dark:border-indigo-800 border-t-indigo-600 rounded-full animate-spin"></div>
+            </div>
+            <div class="text-center">
+              <p class="text-lg font-medium text-gray-900 dark:text-white">Analyzing fonts...</p>
+              <p class="text-gray-500 dark:text-gray-400 mt-1">This usually takes a few seconds</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Content -->
+        <div id="results-content" class="hidden space-y-6">
+          <!-- Summary Card -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-xl p-6 md:p-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Found <span id="font-count" class="text-indigo-600 dark:text-indigo-400">12</span> Font Families</h3>
+                <p class="text-gray-600 dark:text-gray-300">Analyzed <span id="analyzed-url" class="font-mono text-indigo-600 dark:text-indigo-400">stripe.com</span></p>
+              </div>
+              <div class="flex gap-3">
+                <button class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">Export All</button>
+                <button class="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all">Download ZIP</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Font Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="font-grid">
+            <!-- Font cards will be dynamically inserted -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Browser Extension Promo -->
+    <div class="mt-16 relative rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-8 md:p-12 overflow-hidden">
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2760%27%20height%3D%2760%27%20viewBox%3D%270%200%2060%2060%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cg%20fill%3D%27none%27%20fill-rule%3D%27evenodd%27%3E%3Cg%20fill%3D%27%23ffffff%27%20fill-opacity%3D%270.05%27%3E%3Cpath%20d%3D%27M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')]"></div>
+      <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div>
+          <h3 class="text-2xl md:text-3xl font-bold text-white mb-3">Get the Browser Extension</h3>
+          <p class="text-indigo-100 text-lg max-w-xl">Analyze fonts on any page with one click. No need to copy URLs — just click the extension icon.</p>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <a href="#" class="px-6 py-3 text-base font-semibold text-indigo-600 bg-white rounded-xl hover:bg-gray-100 transition-colors shadow-lg">
+            <span class="flex items-center gap-2">Chrome Web Store</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+          <a href="#" class="px-6 py-3 text-base font-semibold text-white bg-white/20 rounded-xl hover:bg-white/30 transition-colors backdrop-blur-sm border border-white/30">
+            Firefox Add-ons
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Demo functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlInput = document.getElementById('url-input') as HTMLInputElement;
+    const analyzeBtn = document.getElementById('analyze-btn') as HTMLButtonElement;
+    const exampleBtns = document.querySelectorAll('.example-btn');
+    const loading = document.getElementById('loading');
+    const results = document.getElementById('results');
+    const resultsContent = document.getElementById('results-content');
+    const fontGrid = document.getElementById('font-grid');
+    const fontCount = document.getElementById('font-count');
+    const analyzedUrl = document.getElementById('analyzed-url');
+
+    // Sample font data for demo
+    const sampleFonts = [
+      { name: 'Inter', style: 'Variable', weights: '100-900', format: 'WOFF2', size: '342 KB', url: '#', category: 'Sans Serif', foundry: 'Rasmus Andersson', license: 'OFL' },
+      { name: 'JetBrains Mono', style: 'Variable', weights: '100-800', format: 'WOFF2', size: '287 KB', url: '#', category: 'Monospace', foundry: 'JetBrains', license: 'OFL' },
+      { name: 'Space Grotesk', style: 'Variable', weights: '300-700', format: 'WOFF2', size: '198 KB', url: '#', category: 'Sans Serif', foundry: 'Florian Karsten', license: 'OFL' },
+      { name: 'Syne', style: 'Variable', weights: '300-800', format: 'WOFF2', size: '412 KB', url: '#', category: 'Display', foundry: 'Bonjour Monde', license: 'OFL' },
+      { name: 'IBM Plex Sans', style: 'Regular', weights: '100-700', format: 'WOFF2', size: '256 KB', url: '#', category: 'Sans Serif', foundry: 'IBM', license: 'OFL' },
+      { name: 'DM Sans', style: 'Variable', weights: '100-1000', format: 'WOFF2', size: '187 KB', url: '#', category: 'Sans Serif', foundry: 'Colophon', license: 'OFL' },
+    ];
+
+    function createFontCard(font: typeof sampleFonts[0], index: number) {
+      return `
+        <article class="group bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden animate-fade-in-up" style="animation-delay: ${index * 50}ms">
+          <div class="p-6">
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <div class="flex-1 min-w-0">
+                <h4 class="text-lg font-semibold text-gray-900 dark:text-white truncate">${font.name}</h4>
+                <div class="flex flex-wrap items-center gap-2 mt-1.5 text-sm">
+                  <span class="px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 font-medium">${font.category}</span>
+                  <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">${font.style}</span>
+                </div>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl flex-shrink-0">
+                ${font.name.charAt(0)}
+              </div>
+            </div>
+
+            <div class="space-y-3 mb-6 text-sm text-gray-600 dark:text-gray-300">
+              <div class="flex justify-between">
+                <span>Weights</span>
+                <span class="font-mono font-medium text-gray-900 dark:text-white">${font.weights}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Format</span>
+                <span class="font-medium">${font.format}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Size</span>
+                <span class="font-medium">${font.size}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Foundry</span>
+                <span class="font-medium truncate max-w-[120px]">${font.foundry}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>License</span>
+                <span class="px-2 py-0.5 rounded text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300">${font.license}</span>
+              </div>
+            </div>
+
+            <div class="flex gap-3 pt-4 border-t border-gray-100 dark:border-gray-700">
+              <button class="flex-1 py-2.5 text-sm font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/30 transition-colors flex items-center justify-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download
+              </button>
+              <button class="px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    async function analyzeUrl(url: string) {
+      // Show loading
+      results.classList.remove('hidden');
+      loading.classList.remove('hidden');
+      resultsContent.classList.add('hidden');
+      fontGrid.innerHTML = '';
+      analyzeBtn.disabled = true;
+      analyzeBtn.innerHTML = '<span class="flex items-center gap-2"><svg class="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Analyzing...</span>';
+
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Show results
+      loading.classList.add('hidden');
+      resultsContent.classList.remove('hidden');
+
+      fontCount.textContent = sampleFonts.length.toString();
+      analyzedUrl.textContent = new URL(url).hostname;
+
+      sampleFonts.forEach((font, index) => {
+        fontGrid.innerHTML += createFontCard(font, index);
+      });
+
+      analyzeBtn.disabled = false;
+      analyzeBtn.innerHTML = '<span>Analyze Fonts</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>';
+    }
+
+    // Event listeners
+    analyzeBtn.addEventListener('click', () => {
+      const url = urlInput.value.trim();
+      if (url) {
+        analyzeUrl(url);
+      }
+    });
+
+    urlInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const url = urlInput.value.trim();
+        if (url) {
+          analyzeUrl(url);
+        }
+      }
+    });
+
+    exampleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const url = btn.getAttribute('data-url');
+        if (url) {
+          urlInput.value = url;
+          analyzeUrl(url);
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+    opacity: 0;
+  }
+</style>
